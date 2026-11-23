@@ -1,0 +1,716 @@
+SOFTWARE REQUIREMENTSSPECIFICATION
+Election & Contact Management Web Application
+Version 1.0 | Prepared from the supplied App Development Requirement DocumentWeb application interpretation | Requirements baseline for discussion and development
+Document field
+Details
+Document type
+Software Requirements Specification (SRS)
+Product
+Election & Contact Management Web Application
+Baseline source
+User-provided 2-page Election & Contact Management App Requirements PDF
+Version / status
+1.0 / Draft for stakeholder confirmation
+Target
+Responsive web application; desktop and mobile browser support
+Important scope note: The source document describes an Android app. This SRS adapts the same stated features to a web app and labels implementation choices that require confirmation.
+Document Control
+Version
+Date
+Description
+1.0
+22 November 2026
+Initial detailed web-app SRS derived from the supplied requirements.
+Contents
+1. Introduction and Purpose
+2. Product Scope
+3. Stakeholders and User Roles
+4. Assumptions and Decisions to Confirm
+5. Functional Requirements
+6. Business Rules
+7. Reminder Scheduling Specification
+8. Data Requirements
+9. UI / UX Requirements
+10. Security, Privacy and Compliance Requirements
+11. Non-Functional Requirements
+12. Technical Architecture Proposal
+13. API Requirements (Proposed)
+14. Acceptance Criteria and Test Scenarios
+15. Error Handling and Operational Requirements
+16. Delivery Scope and Future Enhancements
+17. Requirement Traceability
+18. Developer / Stakeholder Sign-off
+1. Introduction and Purpose
+This document defines the product requirements for a web application used to maintain a voluntarily provided contact directory, organize contacts into three user-managed categories, view contact information, search and filter records, and manage birthday and marriage-anniversary reminders. It provides a common baseline for product owners, developers, testers, and deployment/support teams.
+1.1 Intended audience
+Project owner / business stakeholder
+UI/UX designer
+Frontend and backend developers
+QA / testing team
+Deployment and application-support team
+1.2 Requirement language
+“Shall” means mandatory. “Should” means recommended. “May” means optional. Features identified as proposed or requiring confirmation are not commitments from the source PDF.
+2. Product Scope
+The application shall provide a secure, responsive contact-management workspace with:
+A dashboard showing total contacts, category counts, upcoming birthdays/anniversaries, and reminders due today.
+Three categories: My Confirmed Supporters, Neutral Contacts, and Other Contacts / No Particular Association.
+Individual editable contact profiles.
+Exactly one reminder notification one calendar day before each saved birthday or marriage anniversary, with no same-day or midnight duplicate.
+Name/mobile search; village/city, ward/area, and category filters; upcoming-occasion views.
+Contact export to Excel-compatible CSV and/or Excel, backup and restore, and contact correction/deletion.
+PIN/password protection, privacy safeguards, voluntary and informed data entry, and Hindi/English support if feasible.
+The application is a contact-management tool. It shall not infer, secretly collect, or derive a person’s political views or voting preference. Category 1 is permitted only where the person has identified or self-declared as a confirmed supporter, as stated in the source requirements.
+3. Stakeholders and User Roles
+Role
+Description
+Permissions (baseline)
+Application owner / authenticated user
+Person using the app to maintain their contact directory.
+Create, view, edit, categorize, search, export, backup, restore, and delete their contacts.
+Administrator (if multi-user deployment is approved)
+Operational administrator of the web service.
+Manage accounts/system configuration; should not browse contact content unless explicitly authorized and audited.
+Guest / unauthenticated visitor
+Person not signed in.
+No access to private contact data or application functions.
+The source PDF does not define multi-user accounts, teams, or administrator access. The simplest baseline is a private, single-owner account. Confirm whether multiple users and shared contact books are required before implementation.
+4. Assumptions and Decisions to Confirm
+ID
+Assumption / open decision
+Recommended baseline
+Q-01
+Web app vs Android app
+This SRS treats the requested product as a responsive web app. Confirm whether a native Android app is also required.
+Q-02
+Single-user or multi-user
+Private user account with isolated contacts; no contact sharing in MVP.
+Q-03
+Notification delivery
+Web push/email/SMS are not specified in the source. Proposed default: browser push where permission is granted, plus dashboard reminders. Confirm channel and provider.
+Q-04
+Reminder time
+One local-time notification on the previous calendar day. Confirm exact time (recommended configurable default, e.g. 9:00 AM).
+Q-05
+Date/time zone
+Use the account’s configured time zone; default to Asia/Kolkata only if the user confirms India-based use.
+Q-06
+Excel export
+Confirm true .xlsx requirement. CSV is mandatory in source; .xlsx is a compatible optional implementation.
+Q-07
+Backup storage
+Confirm whether backup is downloadable by the user, stored in cloud, or both.
+Q-08
+Photo storage / limits
+Confirm allowed image formats, maximum size, and storage provider.
+Q-09
+Data retention
+Define account deletion, backup retention, and deletion from backups.
+Q-10
+Multi-language
+Hindi and English are required if feasible; confirm initial release languages and translation owner.
+These decisions are intentionally visible rather than silently assumed. The developer should obtain written approval before finalizing notification, backup, and security behavior, as requested by the source document.
+5. Functional Requirements
+5.1 Authentication and app lock
+ID
+Requirement
+Priority
+FR-AUTH-01
+The app shall require authentication before displaying private contact data.
+Must
+FR-AUTH-02
+The app shall provide a PIN or password protection mechanism.
+Must
+FR-AUTH-03
+The app shall provide a secure sign-out / lock action.
+Must
+FR-AUTH-04
+The app should support recovery/reset using a verified account method; recovery shall not expose the old password/PIN.
+Should
+FR-AUTH-05
+The app shall rate-limit repeated failed authentication attempts and temporarily delay or lock further attempts.
+Must
+5.2 Dashboard
+ID
+Requirement
+Priority
+FR-DASH-01
+The dashboard shall show the total number of saved contacts.
+Must
+FR-DASH-02
+The dashboard shall show contact counts for each of the three categories.
+Must
+FR-DASH-03
+The dashboard shall show upcoming birthdays and marriage anniversaries.
+Must
+FR-DASH-04
+When the app is opened, the dashboard shall display reminders due today.
+Must
+FR-DASH-05
+Dashboard counts shall refresh after contact create/edit/delete/category change.
+Must
+FR-DASH-06
+Selecting a dashboard count or reminder shall open the corresponding filtered list/contact profile.
+Should
+5.3 Contact categories
+ID
+Requirement
+Priority
+FR-CAT-01
+The app shall support exactly these default categories: My Confirmed Supporters; Neutral Contacts; Other Contacts / No Particular Association.
+Must
+FR-CAT-02
+A contact shall belong to one category at a time unless stakeholder approves multi-category tagging.
+Must / confirm
+FR-CAT-03
+The user shall be able to assign a category when creating a contact.
+Must
+FR-CAT-04
+The user shall be able to change a contact’s category later.
+Must
+FR-CAT-05
+Category 1 shall be used only when the person has identified or self-declared as a confirmed supporter.
+Must
+FR-CAT-06
+The app shall not infer or secretly collect political views or voting preference.
+Must
+5.4 Contact profile and management
+ID
+Field / function
+Requirement
+Priority
+FR-CON-01
+Full name
+Required field; editable.
+Must
+FR-CON-02
+Father’s name
+Optional; editable.
+Should
+FR-CON-03
+Mobile number
+Contact number; validate format; editable.
+Must
+FR-CON-04
+Address
+Editable address text.
+Must
+FR-CON-05
+Village / city
+Editable location field.
+Must
+FR-CON-06
+Ward / area
+Editable area field.
+Must
+FR-CON-07
+DOB
+Optional date; used for birthday reminder.
+Must
+FR-CON-08
+Marriage anniversary
+Optional date; used for anniversary reminder.
+Must
+FR-CON-09
+Profile photo
+Optional upload, preview, replace, and remove.
+Should
+FR-CON-10
+Personal notes
+Optional free-text notes; editable.
+Must
+FR-CON-11
+Profile
+Each person shall have a separate profile page/detail view.
+Must
+FR-CON-12
+Create
+User shall be able to add a contact.
+Must
+FR-CON-13
+Edit
+User shall be able to edit saved details.
+Must
+FR-CON-14
+Delete
+User shall be able to delete a contact after confirmation.
+Must
+FR-CON-15
+Validation
+Required fields and invalid values shall be clearly identified before save.
+Must
+FR-CON-16
+Duplicate check
+App should warn when mobile number matches an existing contact; user may review before proceeding.
+Should
+5.5 Birthday and anniversary reminders
+ID
+Requirement
+Priority
+FR-REM-01
+For each saved DOB, the system shall schedule exactly one reminder for one calendar day before the birthday.
+Must
+FR-REM-02
+For each saved marriage-anniversary date, the system shall schedule exactly one reminder for one calendar day before the anniversary.
+Must
+FR-REM-03
+The system shall not send an additional notification at 12:00 AM on the occasion date or on the occasion day.
+Must
+FR-REM-04
+A reminder shall identify the contact and the occasion (birthday or marriage anniversary).
+Must
+FR-REM-05
+When the app is opened, upcoming reminders shall be visible in a list.
+Must
+FR-REM-06
+The user shall be able to view contacts ordered by upcoming birthday or anniversary.
+Must
+FR-REM-07
+Changing or removing a date shall update/cancel the corresponding scheduled reminder.
+Must
+FR-REM-08
+A reminder shall be deduplicated by contact, occasion type, and occasion year/date.
+Must
+FR-REM-09
+If the browser/device notification permission is unavailable, the app shall still show the reminder in the dashboard and explain notification status.
+Must
+5.6 Search, filters, and sorting
+ID
+Requirement
+Priority
+FR-SEARCH-01
+Search shall match contact name.
+Must
+FR-SEARCH-02
+Search shall match mobile number.
+Must
+FR-SEARCH-03
+Filter by village / city.
+Must
+FR-SEARCH-04
+Filter by ward / area.
+Must
+FR-SEARCH-05
+Filter by category.
+Must
+FR-SEARCH-06
+Show a list sorted by next upcoming birthday.
+Must
+FR-SEARCH-07
+Show a list sorted by next upcoming marriage anniversary.
+Must
+FR-SEARCH-08
+Filters and search should be combinable and clearable.
+Should
+5.7 Export, backup, and restore
+ID
+Requirement
+Priority
+FR-DATA-01
+The app shall support exporting contacts to CSV.
+Must
+FR-DATA-02
+The app should support Excel (.xlsx) export if confirmed in scope.
+Should
+FR-DATA-03
+The app shall provide a backup option.
+Must
+FR-DATA-04
+The app shall provide a restore option.
+Must
+FR-DATA-05
+The app shall avoid data loss when changing devices or reinstalling; account-based cloud sync or user-managed backup shall be provided.
+Must
+FR-DATA-06
+Backup/restore shall include contact fields, category, dates, notes, and photo references or photo files as approved.
+Must
+FR-DATA-07
+Restore shall validate the backup and show a preview/confirmation before applying it.
+Should
+FR-DATA-08
+The app shall report export/backup/restore success or failure without exposing sensitive data in error messages.
+Must
+5.8 Privacy and correction
+ID
+Requirement
+Priority
+FR-PRIV-01
+Only information voluntarily provided with the person’s knowledge shall be stored.
+Must
+FR-PRIV-02
+The app shall provide a way to correct a person’s information.
+Must
+FR-PRIV-03
+The app shall provide a way to delete a person’s information.
+Must
+FR-PRIV-04
+The app shall not infer or secretly collect political views or voting preference.
+Must
+6. Business Rules
+A contact must have a unique internal contact ID.
+A contact’s category is one of the three approved categories in the MVP.
+Only a user-confirmed/self-declared association may be represented by Category 1.
+DOB and marriage anniversary are optional; no reminder is scheduled for a missing date.
+Reminder date is the previous calendar date in the account’s configured time zone, not simply 24 hours before the event.
+Leap-day birthdays and anniversaries require a stakeholder-approved policy for non-leap years (recommended: remind on 28 February; confirm).
+Deleting a contact cancels future reminders and removes it from normal search/list views.
+The system shall not generate reminders for dates already passed if the previous-day reminder window was missed; the dashboard may show a missed reminder only if the product owner approves that behavior.
+7. Reminder Scheduling Specification
+This section defines the required behavior; the exact delivery channel and clock time are open decisions.
+7.1 Required schedule
+On contact create or date change, calculate the next occurrence of the saved occasion.
+Calculate the reminder date as one local calendar day before the occasion date.
+Schedule one notification for the agreed local reminder time on that reminder date.
+Store a unique reminder key such as contact_id + occasion_type + occasion_year.
+Before dispatch, check that the key has not already been delivered; mark it delivered atomically after successful dispatch.
+Do not schedule a second job for midnight or the occasion date.
+When the date changes or contact is deleted, cancel/update pending jobs and invalidate old reminder keys.
+7.2 Duplicate prevention
+Use a persistent reminder record with status: pending, sent, cancelled, or failed.
+Use a database uniqueness constraint on contact_id, occasion_type, occasion_year (or exact occasion date).
+The delivery worker shall use an idempotency key so retries do not produce a second user-visible alert.
+A retry after a transient failure shall retry the same reminder record, not create a new reminder.
+A successful notification shall be recorded with delivered_at and channel/provider response where available.
+7.3 Web notification limitation
+A browser tab cannot reliably deliver scheduled notifications while closed without a server-side scheduler and a supported push mechanism. For dependable delivery, use a backend scheduler/queue plus Web Push (with service worker and user permission) or another approved channel. Dashboard reminders are available when the user opens the app. Delivery cannot be guaranteed if push permission is denied, the device is offline, or the browser/OS blocks notifications; the UI must communicate this.
+7.4 Reminder message examples
+“Tomorrow is [Contact Name]’s birthday.”
+“Tomorrow is [Contact Name]’s marriage anniversary.”
+8. Data Requirements
+Entity
+Field
+Type / rule
+User
+id
+UUID / primary key
+User
+email or username
+Unique login identifier; exact method to confirm
+User
+password_hash
+Secure one-way hash; never store plain password
+User
+timezone
+IANA time-zone string; used for reminder calendar dates
+Contact
+id
+UUID / primary key
+Contact
+owner_user_id
+Foreign key to user; isolates contact book
+Contact
+full_name
+Required text
+Contact
+father_name
+Optional text
+Contact
+mobile_number
+Required or mandatory status to confirm; normalized string
+Contact
+address
+Optional/required status to confirm; text
+Contact
+village_city
+Text; searchable/filterable
+Contact
+ward_area
+Text; searchable/filterable
+Contact
+dob
+Nullable date
+Contact
+anniversary_date
+Nullable date
+Contact
+photo_storage_key
+Nullable reference to protected storage
+Contact
+notes
+Nullable text; access-controlled
+Contact
+category
+Enum: CONFIRMED_SUPPORTER / NEUTRAL / OTHER
+Contact
+created_at / updated_at
+Timestamp
+Reminder
+id
+UUID / primary key
+Reminder
+contact_id
+Foreign key; delete behavior cancels/removes reminders
+Reminder
+occasion_type
+BIRTHDAY / ANNIVERSARY
+Reminder
+occasion_date
+Date of event for that year
+Reminder
+scheduled_at
+Timezone-aware timestamp
+Reminder
+status
+PENDING / SENT / CANCELLED / FAILED
+Reminder
+idempotency_key
+Unique key for duplicate prevention
+Reminder
+sent_at
+Nullable timestamp
+Suggested indexes: owner_user_id; normalized mobile number; category; village_city; ward_area; dob; anniversary_date; reminder scheduled_at/status. Actual indexing should be validated against expected contact volume and query patterns.
+9. UI / UX Requirements
+Clean, simple interface with clear navigation and readable contact lists.
+Responsive layout for desktop, tablet, and Android mobile browsers.
+Suggested primary navigation: Dashboard, Contacts, Reminders, Backup/Export, Settings.
+Contact list should show name, mobile, category, village/city, and next occasion where available.
+Contact detail page shall show all saved fields and provide Edit/Delete actions.
+Forms shall show field labels, validation messages, save/cancel actions, and unsaved-change warning where appropriate.
+Provide empty states (no contacts/no reminders), loading states, and clear success/error feedback.
+Hindi and English language support should be designed using localization files rather than hard-coded UI text.
+Use accessible contrast, keyboard navigation, visible focus, and semantic labels.
+10. Security, Privacy and Compliance Requirements
+All production traffic shall use HTTPS/TLS.
+Passwords shall be stored using a modern password hashing algorithm (e.g., Argon2id or bcrypt with an appropriate work factor), never plaintext.
+Sensitive contact data shall be protected at rest where technically feasible; encryption keys must not be stored beside encrypted data.
+Authorization shall ensure each user can access only their own contacts unless an approved sharing model exists.
+Validate and sanitize inputs; protect against SQL injection, XSS, CSRF (where applicable), insecure direct object references, and malicious file uploads.
+Profile photos shall be type/size validated, stored privately, and served using access-controlled URLs.
+Do not place contact names, phone numbers, notes, or dates in application logs, analytics, or error traces unnecessarily.
+Provide consent/notice language explaining what data is stored and why; record user acknowledgment if required by product/legal review.
+Provide data export, correction, and deletion controls.
+Use least-privilege database and hosting credentials; keep secrets in environment/secret management, not source code.
+Use security updates, dependency scanning, and periodic backup restore tests.
+This is a product-security baseline, not legal advice. The owner should review applicable privacy/data-protection obligations before launch.
+11. Non-Functional Requirements
+ID
+Quality attribute
+Requirement / target
+NFR-PERF-01
+Performance
+Common list/search/dashboard operations should respond within 2 seconds for an agreed test dataset and normal network conditions.
+NFR-SCALE-01
+Scalability
+Support a large number of contacts; benchmark target and expected maximum contact count must be agreed.
+NFR-AVAIL-01
+Reliability
+No silent loss of saved data; failures shall be surfaced and logged safely.
+NFR-RESP-01
+Responsiveness
+Usable on modern desktop and Android mobile browsers; layouts adapt to screen size.
+NFR-COMP-01
+Compatibility
+Support current stable Chrome/Edge/Firefox and Android Chrome; exact browser matrix to confirm.
+NFR-I18N-01
+Localization
+Support English and Hindi if feasible; dates/numbers use locale-aware display.
+NFR-SEC-01
+Security
+Meet security requirements in Section 10; protect private contact information.
+NFR-BACK-01
+Recoverability
+Backup and restore shall be tested; recovery point and recovery time objectives to confirm.
+NFR-MAINT-01
+Maintainability
+Modular architecture, documented setup, environment configuration, and repeatable deployment.
+NFR-EXT-01
+Extensibility
+Design shall allow additional features without major redesign.
+12. Technical Architecture Proposal
+The source PDF does not prescribe a technology stack. The following is a proposed implementation that can be changed by the project owner.
+Layer
+Proposed technology / responsibility
+Frontend
+React + TypeScript; responsive UI; localization; form validation; service worker for web push if approved.
+Backend
+Node.js + Express/NestJS REST API; authentication; authorization; contact CRUD; export/backup endpoints.
+Database
+PostgreSQL or MySQL relational database; indexed contact and reminder tables.
+Scheduler / queue
+Backend scheduled worker/queue for reminder creation and dispatch; idempotent jobs.
+Notification
+Web Push provider/service worker; fallback dashboard reminders. Email/SMS only if separately approved.
+File storage
+Private object storage for profile photos and backup files; access-controlled URLs.
+Hosting
+Managed cloud/VPS with HTTPS, environment secrets, monitoring, and automated backups.
+12.1 Suggested high-level flow
+Browser UI → HTTPS API → Authentication/authorization → Contact & reminder services → Database. A scheduler reads pending reminder records and dispatches through the approved notification provider. Private photos/backups are stored separately with controlled access.
+13. API Requirements (Proposed)
+API paths below are illustrative and should be finalized during design. All contact endpoints require authentication and owner-level authorization.
+Method
+Endpoint
+Purpose
+POST
+/api/auth/login
+Authenticate user
+POST
+/api/auth/logout
+End session
+GET
+/api/dashboard
+Counts and upcoming/due reminders
+GET
+/api/contacts
+List/search/filter contacts; pagination
+POST
+/api/contacts
+Create contact
+GET
+/api/contacts/{id}
+Read one contact
+PATCH
+/api/contacts/{id}
+Update contact
+DELETE
+/api/contacts/{id}
+Delete contact and cancel future reminders
+GET
+/api/reminders
+List reminders by date/status/occasion
+POST
+/api/export/contacts
+Generate CSV/XLSX export
+POST
+/api/backup
+Create/download backup
+POST
+/api/restore/preview
+Validate and preview backup
+POST
+/api/restore/commit
+Apply approved restore
+GET
+/api/settings
+Read user settings, language, timezone, notification state
+PATCH
+/api/settings
+Update supported settings
+API responses should use consistent status codes and a stable error structure. List endpoints should support pagination and avoid returning unnecessary sensitive fields.
+14. Acceptance Criteria and Test Scenarios
+Test ID
+Scenario
+Expected result
+AT-01
+Create contact with valid required fields.
+Contact saves and appears in contact list; dashboard total increases by one.
+AT-02
+Assign each of the three categories.
+Contact appears in correct category count and filtered list.
+AT-03
+Move a contact from Neutral to Other.
+Category updates; counts update; no duplicate contact is created.
+AT-04
+Search by full/partial name.
+Matching contacts are shown; non-matching contacts are not.
+AT-05
+Search by mobile number.
+Matching contact is shown.
+AT-06
+Apply city, ward, and category filters together.
+Only contacts matching all selected filters are displayed.
+AT-07
+Contact has birthday on date D.
+Exactly one reminder is scheduled for D−1 at approved local time.
+AT-08
+Birthday reminder has been sent.
+No second reminder at 00:00 on D or during D.
+AT-09
+Contact has anniversary on date D.
+Exactly one reminder is scheduled for D−1; no same-day duplicate.
+AT-10
+Update DOB/anniversary before reminder fires.
+Old reminder is cancelled/invalidated and one correct new reminder is scheduled.
+AT-11
+Delete contact with pending reminders.
+Contact is removed and pending reminders are cancelled.
+AT-12
+Notification permission is denied.
+Dashboard reminder remains visible; app shows notification permission/status.
+AT-13
+Export contacts.
+Downloaded file contains expected records and fields; CSV opens correctly in spreadsheet software.
+AT-14
+Backup then restore to a test account/device.
+All supported fields and categories are restored without silent data loss.
+AT-15
+User attempts to access another user’s contact ID.
+API denies access; no contact data is returned.
+AT-16
+Enter invalid mobile/date/upload.
+Validation error is shown; invalid data is not saved.
+AT-17
+Open app on mobile and desktop viewport.
+Layout remains usable without horizontal overflow for core screens.
+AT-18
+Open dashboard with reminders due today.
+Due-today reminders are clearly listed.
+14.1 Reminder acceptance test must be demonstrated
+Before final delivery, the developer shall demonstrate the reminder flow with test contacts and a controlled clock or test scheduler. Evidence should show one previous-day alert, no occasion-day/midnight duplicate, correct cancellation after date edit, and duplicate prevention after worker retry.
+15. Error Handling and Operational Requirements
+Display clear messages for network failure, validation failure, expired session, backup failure, export failure, and notification permission/status.
+Do not display stack traces, database errors, secrets, or contact details in user-facing error messages.
+Log system errors with correlation IDs and timestamps; redact personal data.
+Provide health checks for backend and scheduler/worker.
+Monitor failed reminder jobs and provide a retry/reconciliation process that preserves idempotency.
+Document deployment, environment variables, database migration, backup/restore, and rollback steps.
+Maintain a support procedure for notification provider outage and data restore.
+16. Delivery Scope and Future Enhancements
+16.1 MVP (required baseline)
+Authentication/app lock
+Dashboard and category counts
+Contact CRUD and three categories
+Birthday/anniversary reminder engine with duplicate prevention
+Search, filters, and upcoming occasion views
+CSV export
+Backup and restore
+Privacy/security controls
+Responsive UI and Hindi/English-ready design
+16.2 Optional / later phase (not specified as mandatory in source)
+Multi-user teams and contact sharing
+Role-based admin portal
+Bulk contact import
+Advanced analytics
+Email/SMS reminder channels
+Audit history for edits
+Native Android application
+Calendar integration
+Any optional feature must be approved, estimated, and added to the scope baseline before development.
+17. Requirement Traceability
+Source PDF section
+Mapped SRS section(s)
+1. Main Dashboard
+5.2 Dashboard; 14 acceptance tests
+2. Contact Categories
+5.3 Categories; 6 Business Rules
+3. Individual Contact Profile
+5.4 Contact profile; 8 Data Requirements
+4. Birthday & Anniversary Notifications
+5.5 Reminders; 7 Scheduling; 14 Acceptance Tests
+5. Search & Filters
+5.6 Search and filters
+6. Data Management & Backup
+5.7 Export/backup/restore; 14 Acceptance Tests
+7. Privacy & Security
+5.8 Privacy; 10 Security
+8. Design & Technical Requirements
+9 UI/UX; 11 NFR; 12 Architecture
+9. Key Acceptance Requirement
+7 Reminder scheduling; 14 Acceptance criteria
+Developer note
+4 Decisions to confirm; 18 Sign-off
+18. Developer / Stakeholder Sign-off
+The following items must be confirmed before final delivery:
+Notification channel(s), exact reminder time, time-zone behavior, and leap-day policy.
+Backup method, backup location, restore behavior, and retention policy.
+Data security approach, encryption scope, authentication and recovery method.
+Single-user vs multi-user model and any contact-sharing permissions.
+Final stack, hosting, expected contact volume, performance target, and browser support.
+Whether .xlsx, photo backup, and any optional feature are included in MVP.
+Approval
+Name / role
+Signature / date
+Product owner
+Developer / technical lead
+QA / tester
+Source Basis
+This SRS is based on the user-provided document “APP DEVELOPMENT REQUIREMENT DOCUMENT — Project: Election & Contact Management App” (2 pages). Original requirements were retained in meaning. Web-specific architecture, API examples, quality targets, data model, and test cases are proposed elaborations and should be confirmed by the project owner.

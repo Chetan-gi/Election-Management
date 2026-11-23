@@ -1,0 +1,64 @@
+<resources>
+    <string name="app_name">चुनाव एवं संपर्क प्रबंधन</string>
+
+    <!-- Navigation & Titles -->
+    <string name="nav_dashboard">डैशबोर्ड</string>
+    <string name="nav_contacts">संपर्क सूची</string>
+    <string name="nav_reminders">स्मरण पत्र (रिमाइंडर)</string>
+    <string name="nav_settings">सेटिंग्स</string>
+
+    <!-- Categories -->
+    <string name="category_supporters">पुष्ट समर्थक</string>
+    <string name="category_neutral">तटस्थ संपर्क</string>
+    <string name="category_other">अन्य संपर्क</string>
+
+    <!-- Dashboard -->
+    <string name="total_contacts">कुल संपर्क</string>
+    <string name="reminders_due_today">आज के देय रिमाइंडर</string>
+    <string name="upcoming_events">आगामी अवसर (अगले 30 दिन)</string>
+    <string name="no_reminders_today">आज कोई रिमाइंडर देय नहीं है</string>
+    <string name="no_upcoming_events">कोई आगामी जन्मदिन या वर्षगांठ नहीं है</string>
+
+    <!-- Contact Form -->
+    <string name="add_contact">नया संपर्क जोड़ें</string>
+    <string name="edit_contact">संपर्क संपादित करें</string>
+    <string name="full_name">पूरा कानूनी नाम</string>
+    <string name="father_name">पिता / पति का नाम</string>
+    <string name="mobile_number">10 अंकों का मोबाइल नंबर</string>
+    <string name="address">निवास का पता</string>
+    <string name="village_city">गांव / शहर</string>
+    <string name="ward_area">मतदान वार्ड / क्षेत्र</string>
+    <string name="dob">जन्म तिथि</string>
+    <string name="anniversary_date">शादी की वर्षगांठ</string>
+    <string name="notes">टिप्पणी / विवरण</string>
+    <string name="select_category">श्रेणी चुनें</string>
+    <string name="save_contact">संपर्क सहेजें</string>
+    <string name="delete_contact">संपर्क हटाएं</string>
+    <string name="confirm_delete_msg">क्या आप वाकई इस संपर्क को हमेशा के लिए हटाना चाहते हैं?</string>
+
+    <!-- Search & Filters -->
+    <string name="search_hint">नाम या मोबाइल नंबर से खोजें…</string>
+    <string name="filter_all">सभी</string>
+    <string name="filter_village">गांव अनुसार फ़िल्टर</string>
+    <string name="filter_ward">वार्ड अनुसार फ़िल्टर</string>
+    <string name="filter_category">श्रेणी अनुसार फ़िल्टर</string>
+
+    <!-- Security & PIN -->
+    <string name="enter_pin">सुरक्षा पिन दर्ज करें</string>
+    <string name="setup_pin">सुरक्षा पिन सेट करें</string>
+    <string name="confirm_pin">सुरक्षा पिन की पुष्टि करें</string>
+    <string name="pin_mismatch">पिन मेल नहीं खा रहा है। पुनः प्रयास करें।</string>
+    <string name="biometric_prompt_title">संपर्क प्रबंधक अनलॉक करें</string>
+    <string name="biometric_prompt_subtitle">प्रवेश के लिए फिंगरप्रिंट या चेहरे की पहचान का उपयोग करें</string>
+
+    <!-- Reminders & Notifications -->
+    <string name="birthday_reminder_title">कल जन्मदिन है</string>
+    <string name="anniversary_reminder_title">कल शादी की वर्षगांठ है</string>
+    <string name="birthday_reminder_body">कल %1$s का जन्मदिन है।</string>
+    <string name="anniversary_reminder_body">कल %1$s की शादी की वर्षगांठ है।</string>
+
+    <!-- Export & Privacy -->
+    <string name="export_csv">संपर्क CSV प्रारूप में निर्यात करें</string>
+    <string name="export_excel">संपर्क Excel (.xlsx) प्रारूप में निर्यात करें</string>
+    <string name="voluntary_consent_notice">सूचना: इस एप्लिकेशन में संग्रहीत संपर्क विवरण नागरिकों द्वारा स्वेच्छा से प्रदान किए गए हैं। यह ऐप किसी भी मतदाता की राजनीतिक प्राथमिकताओं का गुप्त अनुमान या विश्लेषण नहीं करता है।</string>
+</resources>

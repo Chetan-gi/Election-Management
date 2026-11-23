@@ -1,0 +1,64 @@
+<resources>
+    <string name="app_name">Election &amp; Contact Manager</string>
+
+    <!-- Navigation & Titles -->
+    <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_contacts">Contacts</string>
+    <string name="nav_reminders">Reminders</string>
+    <string name="nav_settings">Settings</string>
+
+    <!-- Categories -->
+    <string name="category_supporters">Confirmed Supporters</string>
+    <string name="category_neutral">Neutral Contacts</string>
+    <string name="category_other">Other Contacts</string>
+
+    <!-- Dashboard -->
+    <string name="total_contacts">Total Contacts</string>
+    <string name="reminders_due_today">Reminders Due Today</string>
+    <string name="upcoming_events">Upcoming Occasions (Next 30 Days)</string>
+    <string name="no_reminders_today">No reminders due today</string>
+    <string name="no_upcoming_events">No upcoming birthdays or anniversaries</string>
+
+    <!-- Contact Form -->
+    <string name="add_contact">Add New Contact</string>
+    <string name="edit_contact">Edit Contact</string>
+    <string name="full_name">Full Legal Name</string>
+    <string name="father_name">Father\'s / Spouse\'s Name</string>
+    <string name="mobile_number">10-Digit Mobile Number</string>
+    <string name="address">Residential Address</string>
+    <string name="village_city">Village / City</string>
+    <string name="ward_area">Polling Ward / Area</string>
+    <string name="dob">Date of Birth</string>
+    <string name="anniversary_date">Wedding Anniversary</string>
+    <string name="notes">Notes / Observations</string>
+    <string name="select_category">Select Category</string>
+    <string name="save_contact">Save Contact</string>
+    <string name="delete_contact">Delete Contact</string>
+    <string name="confirm_delete_msg">Are you sure you want to permanently delete this contact?</string>
+
+    <!-- Search & Filters -->
+    <string name="search_hint">Search by Name or Mobile…</string>
+    <string name="filter_all">All</string>
+    <string name="filter_village">Filter Village</string>
+    <string name="filter_ward">Filter Ward</string>
+    <string name="filter_category">Filter Category</string>
+
+    <!-- Security & PIN -->
+    <string name="enter_pin">Enter Security PIN</string>
+    <string name="setup_pin">Setup Security PIN</string>
+    <string name="confirm_pin">Confirm Security PIN</string>
+    <string name="pin_mismatch">PINs do not match. Try again.</string>
+    <string name="biometric_prompt_title">Unlock Contact Manager</string>
+    <string name="biometric_prompt_subtitle">Use fingerprint or face recognition to access</string>
+
+    <!-- Reminders & Notifications -->
+    <string name="birthday_reminder_title">Birthday Tomorrow</string>
+    <string name="anniversary_reminder_title">Anniversary Tomorrow</string>
+    <string name="birthday_reminder_body">Tomorrow is %1$s\'s birthday.</string>
+    <string name="anniversary_reminder_body">Tomorrow is %1$s\'s marriage anniversary.</string>
+
+    <!-- Export & Privacy -->
+    <string name="export_csv">Export Contacts as CSV</string>
+    <string name="export_excel">Export Contacts as Excel (.xlsx)</string>
+    <string name="voluntary_consent_notice">Notice: Contact information stored in this application is voluntarily provided by individuals. The app does not infer, profile, or secretly derive voter political affiliation.</string>
+</resources>
