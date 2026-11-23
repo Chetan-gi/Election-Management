@@ -329,28 +329,21 @@ export default function App() {
         <Route
           path="/login"
           element={
-            user ? (
-              <Navigate to={user.role === 'ADMIN' ? '/admin/dashboard' : '/officer/dashboard'} replace />
-            ) : (
-              <LoginPage
-                onLogin={handleLogin}
-                language={language}
-                onToggleLanguage={() => setLanguage(l => l === 'en' ? 'hi' : 'en')}
-                supabaseStatus={supabaseStatus}
-              />
-            )
+            <LoginPage
+              currentUser={user}
+              onLogin={handleLogin}
+              onSignOut={handleSignOut}
+              language={language}
+              onToggleLanguage={() => setLanguage(l => l === 'en' ? 'hi' : 'en')}
+              supabaseStatus={supabaseStatus}
+            />
           }
         />
 
-        {/* 2. Root Redirect */}
+        {/* 2. Root Redirect - Landing page is always Login */}
         <Route
           path="/"
-          element={
-            <Navigate
-              to={user ? (user.role === 'ADMIN' ? '/admin/dashboard' : '/officer/dashboard') : '/login'}
-              replace
-            />
-          }
+          element={<Navigate to="/login" replace />}
         />
 
         {/* 3. DEDICATED ADMIN ROUTE TREE (Role Protected: ADMIN ONLY) */}
@@ -551,12 +544,7 @@ export default function App() {
         {/* 5. Fallback Route */}
         <Route
           path="*"
-          element={
-            <Navigate
-              to={user ? (user.role === 'ADMIN' ? '/admin/dashboard' : '/officer/dashboard') : '/login'}
-              replace
-            />
-          }
+          element={<Navigate to="/login" replace />}
         />
 
       </Routes>

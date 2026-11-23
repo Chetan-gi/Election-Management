@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   Users, User, Lock, Eye, EyeOff, ShieldCheck, 
   ArrowRight, Zap, Globe, Sparkles, CheckCircle2, Database, Bell,
@@ -8,11 +9,14 @@ import { supabase } from '../services/supabaseClient';
 import { translations } from '../locales/translations';
 
 export default function LoginPage({ 
+  currentUser,
   onLogin, 
+  onSignOut,
   language, 
   onToggleLanguage, 
   supabaseStatus 
 }) {
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -169,14 +173,17 @@ export default function LoginPage({
         } catch (_) {}
 
         setLoading(false);
-        onLogin({
+        const userRole = (dbUser.role || 'OFFICER').trim().toUpperCase();
+        const authData = {
           id: dbUser.id,
           name: dbUser.name,
           username: dbUser.username,
           email: dbUser.email,
-          role: (dbUser.role || 'OFFICER').trim().toUpperCase(),
+          role: userRole,
           mobile_number: dbUser.mobile_number
-        });
+        };
+        onLogin(authData);
+        navigate(userRole === 'ADMIN' ? '/admin/dashboard' : '/officer/dashboard', { replace: true });
       } else {
         // Failure: Record failed audit log in Supabase
         try {
@@ -400,6 +407,39 @@ export default function LoginPage({
               <div className="p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-xl text-xs text-emerald-300 font-semibold flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 shrink-0" />
                 <span>{successMsg}</span>
+              </div>
+            )}
+
+            {/* Active Session Notification if already authenticated */}
+            {currentUser && (
+              <div className="p-3.5 bg-indigo-500/10 border border-indigo-500/30 rounded-2xl flex items-center justify-between gap-3 text-xs">
+                <div>
+                  <div className="text-[10px] uppercase font-bold tracking-wider text-indigo-400">
+                    {language === 'hi' ? 'सक्रिय सत्र (Active Session)' : 'Active Session'}
+                  </div>
+                  <div className="font-bold text-white mt-0.5 truncate max-w-[180px]">
+                    {currentUser.name || currentUser.username} <span className="text-[10px] text-slate-400 font-normal">({currentUser.role})</span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => navigate(currentUser.role === 'ADMIN' ? '/admin/dashboard' : '/officer/dashboard')}
+                    className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold text-[11px] transition shadow"
+                  >
+                    {language === 'hi' ? 'डैशबोर्ड' : 'Dashboard'} &rarr;
+                  </button>
+                  {onSignOut && (
+                    <button
+                      type="button"
+                      onClick={onSignOut}
+                      className="px-2.5 py-1.5 bg-slate-800 hover:bg-rose-900/40 text-slate-300 hover:text-rose-300 rounded-xl font-bold text-[11px] transition"
+                      title="Clear session"
+                    >
+                      {language === 'hi' ? 'लॉगआउट' : 'Sign Out'}
+                    </button>
+                  )}
+                </div>
               </div>
             )}
 
