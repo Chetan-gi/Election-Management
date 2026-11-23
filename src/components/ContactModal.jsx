@@ -102,7 +102,7 @@ export default function ContactModal({
                 required
                 value={formData.village} 
                 onChange={e => onChange({ ...formData, village: e.target.value })}
-                placeholder="e.g. Kalyanpur" 
+                placeholder="e.g. Village / City" 
                 className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:ring-2 focus:ring-indigo-500" 
               />
             </div>
@@ -115,7 +115,7 @@ export default function ContactModal({
                 required
                 value={formData.ward} 
                 onChange={e => onChange({ ...formData, ward: e.target.value })}
-                placeholder="e.g. Ward 12" 
+                placeholder="e.g. Ward 01" 
                 className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:ring-2 focus:ring-indigo-500" 
               />
             </div>

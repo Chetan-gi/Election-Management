@@ -803,7 +803,7 @@ export default function AdminPage({
                         +91 {voter.mobile}
                       </td>
                       <td className="py-3 px-3 text-slate-300">
-                        {voter.village || 'Kalyanpur'}, {voter.ward || 'Ward 12'}
+                        {[voter.village, voter.ward].filter(Boolean).join(', ') || '—'}
                       </td>
                       <td className="py-3 px-3">
                         <span className={`px-2 py-0.5 rounded-full text-[10px] font-black ${voter.category === 'SUPPORTER'

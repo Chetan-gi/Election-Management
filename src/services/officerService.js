@@ -15,8 +15,8 @@ export async function createOfficerWithContact({
   email,
   password,
   address,
-  village = 'Kalyanpur',
-  ward = 'Ward 01',
+  village = '',
+  ward = '',
   dob = null,
   photoUrl = null,
   status = true,
@@ -27,8 +27,8 @@ export async function createOfficerWithContact({
   const cleanMobile = mobile.replace(/\D/g, '');
   const cleanEmail = email ? email.trim().toLowerCase() : null;
   const cleanAddress = address ? address.trim() : null;
-  const cleanVillage = village ? village.trim() : 'Kalyanpur';
-  const cleanWard = ward ? ward.trim() : 'Ward 01';
+  const cleanVillage = village ? village.trim() : null;
+  const cleanWard = ward ? ward.trim() : null;
 
   if (!cleanName || !cleanUsername || !password || !cleanMobile) {
     throw new Error('Please fill in Full Name, Username, Password, and Mobile Number.');
@@ -169,8 +169,8 @@ export async function createNormalContact({
   fatherName = null,
   mobile,
   address = null,
-  village = 'Kalyanpur',
-  ward = 'Ward 01',
+  village = '',
+  ward = '',
   dob = null,
   anniversary = null,
   category = 'NEUTRAL',
@@ -189,8 +189,8 @@ export async function createNormalContact({
     father_name: fatherName ? fatherName.trim() : null,
     mobile_number: cleanMobile,
     address: address ? address.trim() : null,
-    village_city: village ? village.trim() : 'Kalyanpur',
-    ward_area: ward ? ward.trim() : 'Ward 01',
+    village_city: village ? village.trim() : null,
+    ward_area: ward ? ward.trim() : null,
     dob: dob || null,
     anniversary_date: anniversary || null,
     category: category || 'NEUTRAL',

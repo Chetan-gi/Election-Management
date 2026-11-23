@@ -20,8 +20,8 @@ export default function OfficerCreateContactView({
     fullName: '',
     fatherName: '',
     mobile: '',
-    village: 'Kalyanpur',
-    ward: 'Ward 01',
+    village: '',
+    ward: '',
     dob: '',
     anniversary: '',
     category: 'NEUTRAL',
@@ -83,8 +83,8 @@ export default function OfficerCreateContactView({
         fullName: '',
         fatherName: '',
         mobile: '',
-        village: formData.village,
-        ward: formData.ward,
+        village: '',
+        ward: '',
         dob: '',
         anniversary: '',
         category: 'NEUTRAL',
@@ -227,6 +227,7 @@ export default function OfficerCreateContactView({
                 type="text"
                 value={formData.village}
                 onChange={(e) => setFormData({ ...formData, village: e.target.value })}
+                placeholder={language === 'hi' ? 'उदा. गांव / कस्बा' : 'e.g. Village / City'}
                 className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
             </div>
@@ -238,6 +239,7 @@ export default function OfficerCreateContactView({
                 type="text"
                 value={formData.ward}
                 onChange={(e) => setFormData({ ...formData, ward: e.target.value })}
+                placeholder={language === 'hi' ? 'उदा. वार्ड 01' : 'e.g. Ward 01'}
                 className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
             </div>

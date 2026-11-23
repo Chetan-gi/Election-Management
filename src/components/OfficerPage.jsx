@@ -32,8 +32,8 @@ export default function OfficerPage({
     fullName: '',
     fatherName: '',
     mobile: '',
-    village: 'Kalyanpur',
-    ward: 'Ward 12',
+    village: '',
+    ward: '',
     dob: '',
     anniversary: '',
     category: 'NEUTRAL',
@@ -405,7 +405,7 @@ export default function OfficerPage({
                             {copiedMobile === contact.mobile ? '✓ Copied' : 'Copy'}
                           </button>
                           <span>&bull;</span>
-                          <span className="truncate">{contact.village || 'Kalyanpur'}, {contact.ward || 'Ward 12'}</span>
+                          <span className="truncate">{[contact.village, contact.ward].filter(Boolean).join(', ') || '—'}</span>
                         </div>
                       </div>
 
@@ -559,7 +559,7 @@ export default function OfficerPage({
                     type="text"
                     value={formData.village}
                     onChange={(e) => setFormData({ ...formData, village: e.target.value })}
-                    placeholder="Kalyanpur"
+                    placeholder={language === 'hi' ? 'गाँव / शहर' : 'Village / City'}
                     className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
                   />
                 </div>
@@ -570,7 +570,7 @@ export default function OfficerPage({
                     type="text"
                     value={formData.ward}
                     onChange={(e) => setFormData({ ...formData, ward: e.target.value })}
-                    placeholder="Ward 12"
+                    placeholder={language === 'hi' ? 'वार्ड / क्षेत्र' : 'Ward / Area'}
                     className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
                   />
                 </div>
@@ -615,7 +615,7 @@ export default function OfficerPage({
                   rows={2}
                   value={formData.notes}
                   onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                  placeholder="e.g. Influential community elder; volunteer for Ward 12."
+                  placeholder="e.g. Influential community elder; active volunteer."
                   className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 resize-none"
                 ></textarea>
               </div>
@@ -696,7 +696,7 @@ export default function OfficerPage({
 
                     <div className="mt-2 text-[11px] text-slate-400 space-y-0.5">
                       {contact.fatherName && <div>S/O: {contact.fatherName}</div>}
-                      <div>{contact.village || 'Kalyanpur'}, {contact.ward || 'Ward 12'}</div>
+                      <div>{[contact.village, contact.ward].filter(Boolean).join(', ') || '—'}</div>
                       {(contact.dob || contact.anniversary) && (
                         <div className="flex items-center gap-2 pt-0.5">
                           {contact.dob && <span>🎂 {contact.dob}</span>}

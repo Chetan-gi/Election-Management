@@ -178,7 +178,7 @@ export default function OfficerDashboardView({
                     <div className="text-xs text-slate-400 flex items-center gap-2 font-mono mt-0.5">
                       <span>+91 {contact.mobile}</span>
                       <span>•</span>
-                      <span className="font-sans">{contact.village || 'Kalyanpur'}, {contact.ward || 'Ward 01'}</span>
+                      <span className="font-sans">{[contact.village, contact.ward].filter(Boolean).join(', ') || '—'}</span>
                     </div>
                   </div>
 

@@ -186,7 +186,7 @@ export default function AdminContactsView({
 
                 <div className="mt-3 text-xs text-slate-400 space-y-1">
                   {contact.fatherName && <div>S/O: {contact.fatherName}</div>}
-                  <div>{contact.village || 'Kalyanpur'}, {contact.ward || 'Ward 01'}</div>
+                  <div>{[contact.village, contact.ward].filter(Boolean).join(', ') || '—'}</div>
                   {contact.address && <div className="text-slate-500 text-[11px] truncate">{contact.address}</div>}
 
                   {(contact.dob || contact.anniversary) && (

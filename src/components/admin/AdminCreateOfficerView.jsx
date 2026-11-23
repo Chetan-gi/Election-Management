@@ -25,8 +25,8 @@ export default function AdminCreateOfficerView({
     email: '',
     password: '',
     address: '',
-    village: 'Kalyanpur',
-    ward: 'Ward 01',
+    village: '',
+    ward: '',
     dob: '',
     photoUrl: '',
     status: true
@@ -64,8 +64,8 @@ export default function AdminCreateOfficerView({
         email: `${suggestedUser}@election.gov.in`,
         password: suggestedPass,
         address: contact.address || '',
-        village: contact.village || 'Kalyanpur',
-        ward: contact.ward || 'Ward 01',
+        village: contact.village || '',
+        ward: contact.ward || '',
         dob: contact.dob || ''
       }));
     }
@@ -148,8 +148,8 @@ export default function AdminCreateOfficerView({
         email: '',
         password: '',
         address: '',
-        village: 'Kalyanpur',
-        ward: 'Ward 01',
+        village: '',
+        ward: '',
         dob: '',
         photoUrl: '',
         status: true
@@ -260,7 +260,7 @@ export default function AdminCreateOfficerView({
               <option value="">-- Choose a contact from directory to auto-fill form --</option>
               {contacts.map(c => (
                 <option key={c.id} value={c.id}>
-                  {c.fullName} (+91 {c.mobile}) - {c.village || 'Kalyanpur'}
+                  {c.fullName} (+91 {c.mobile}){c.village ? ` - ${c.village}` : ''}
                 </option>
               ))}
             </select>
@@ -381,6 +381,7 @@ export default function AdminCreateOfficerView({
                 type="text"
                 value={formData.village}
                 onChange={(e) => setFormData({ ...formData, village: e.target.value })}
+                placeholder={language === 'hi' ? 'उदा. गांव / शहर' : 'e.g. Village / City'}
                 className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
             </div>
@@ -391,6 +392,7 @@ export default function AdminCreateOfficerView({
                 type="text"
                 value={formData.ward}
                 onChange={(e) => setFormData({ ...formData, ward: e.target.value })}
+                placeholder={language === 'hi' ? 'उदा. वार्ड 01' : 'e.g. Ward 01'}
                 className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
             </div>
