@@ -195,34 +195,12 @@ export default function LoginPage({
 
     } catch (err) {
       console.warn('DB check exception:', err);
-      // Fallback for demo users
-      if ((cleanUser === 'username' && cleanPassword === 'username123') || (cleanUser === 'admin' && cleanPassword === 'admin123')) {
-        setLoading(false);
-        onLogin({
-          id: 'demo-officer-id',
-          name: cleanUser === 'admin' ? 'System Administrator' : 'Campaign Field Officer',
-          username: cleanUser,
-          email: `${cleanUser}@election.gov.in`,
-          role: cleanUser === 'admin' ? 'ADMIN' : 'OFFICER'
-        });
-      } else {
-        setLoading(false);
-        setErrorMsg(language === 'hi' ? 'लॉगिन में त्रुटि। कृपया डेटाबेस कनेक्शन चेक करें।' : 'Login error. Please check database connection.');
-      }
+      setLoading(false);
+      setErrorMsg(language === 'hi' 
+        ? 'लॉगिन में त्रुटि। कृपया अपने क्रेडेंशियल्स अथवा नेटवर्क की पुष्टि करें।' 
+        : 'Login error. Please verify your credentials or check your connection.'
+      );
     }
-  };
-
-  // Quick 1-Click Demo Login
-  const handleQuickDemo = () => {
-    setUsername('username');
-    setPassword('username123');
-    onLogin({ 
-      id: 'demo-officer-id',
-      username: 'username', 
-      name: 'Campaign Field Officer',
-      email: 'officer@election.gov.in',
-      role: 'OFFICER'
-    });
   };
 
   // ============================================================================

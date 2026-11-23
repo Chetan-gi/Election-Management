@@ -36,7 +36,12 @@ import OfficerRemindersView from './components/officer/OfficerRemindersView';
 export default function App() {
   const [contacts, setContacts] = useState(() => {
     const saved = localStorage.getItem('election_contacts');
-    return saved ? JSON.parse(saved) : INITIAL_CONTACTS;
+    // Clear legacy mock data if present
+    if (saved && (saved.includes('c1-9876543210') || saved.includes('Rajesh Kumar Sharma'))) {
+      localStorage.removeItem('election_contacts');
+      return [];
+    }
+    return saved ? JSON.parse(saved) : [];
   });
 
   const [officers, setOfficers] = useState([]);
@@ -88,7 +93,7 @@ export default function App() {
         .eq('is_deleted', false)
         .order('created_at', { ascending: false });
 
-      if (!error && data && data.length > 0) {
+      if (!error && data) {
         const mapped = data.map(item => ({
           id: item.id,
           user_id: item.user_id,
